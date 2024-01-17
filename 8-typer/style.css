@@ -1,31 +1,46 @@
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-family: sans-serif;
-  background: #000;
-  color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: sans-serif;
+    background: #000;
+    color: #fff;
 }
 
 p {
-  font-size: 3rem;
+    font-size: 3rem;
+    position: absolute;
+    top: auto;
+    left: 30vw;
 }
 
 .js {
-  color: #fdfdfc;
+    color: #fdfdfc;
 }
 
 .typed-text {
-  color: #de8512;
+    color: #de8512;
 }
 
 .cursor {
-  background: #dbe912;
+    background: #dbe912;
+    /* display: inline-block; */
+    /* border-left: 2px solid #000; Cursor styling */
+    animation: blink 0.9s infinite; /* Cursor blinking animation */
+}
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
 }
