@@ -9,7 +9,7 @@ let resultParse = document.querySelector(".resultParas");
 
 let prevGuessesNumbers = [];
 let play = true;
-let countdown = 3;
+let countdown = 2;
 let p = document.createElement("p");
 
 if (play) {
@@ -17,23 +17,26 @@ if (play) {
         e.preventDefault();
         let userNumber = parseInt(userInput.value);
         console.log(userNumber);
-        if(countdown<= 0){
+        if(countdown <= 0){
             endGame()
+            message(`acutal number : ${randomNumber}`)
         }else{
             checkValidNumber(userNumber);
+            attempts.innerText = countdown;
         }
     });
 }
 
+
 let checkValidNumber = (number) => {
     let validate = isNaN(number);
-    console.log(validate, typeof number, number)
+    // console.log(validate, typeof number, number)
     if (!validate ) {
         if (number > 0 && number <= 100) {
             userInput.value = "";
-            prevGuessesNumbers.push(number);
+            // prevGuessesNumbers.push(number);
             prevGuesses.innerText += `${number},  `;
-            countdown -= 1;
+            countdown= countdown-1;
             attempts.innerText = countdown;
             compare(number);
         } else {
@@ -58,27 +61,44 @@ let compare = (number) => {
 };
 
 let message = (m) => {
-    lowOrHi.innerText= m;
+    // lowOrHi.innerText= m;
+    Toastify({
+        text: m,
+        className: "info",
+        duration:3000,
+        stopOnfocus:true,
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        offset: {
+            x: 550, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+      }).showToast();
 };
 
 let endGame = () => {
     play = false;
     userInput.setAttribute("disabled","");
-    message(`actual number ${ randomNumber }`);
-    p.innerHTML = `<input type='button' class="restart" value='Restart Game'> `;
-    
+    // message(`actual number ${ randomNumber }`);
+    p.innerHTML = `<input type='button' className="restart" value='Restart Game'> `;
     resultParse.appendChild(p);
     
+    p.addEventListener("click",restartGame)
 
 };
 
 let restartGame = () => {
     // rewrite this function this is bugged check again.
-    // p.addEventListener("click",restartGame);
+    // document.querySelector(".restart").addEventListener("click",restartGame);
     console.log(`executed`)
     play= true;
     userInput.removeAttribute('disabled');
+    userInput.value="";      // not working
     randomNumber = Math.round(Math.random() * 99 + 1);
-    prevGuessesNumbers = [];
-    countdown = 10;
+    console.log(`number assigned again: ${randomNumber}`);
+    prevGuesses.innerText = '';
+    message(`Let's Start Game`);
+    countdown = 2;
+    p.innerHTML=''
 };
